@@ -62,7 +62,7 @@ firstname, lastname)
 <table id='userform'> 
 <tr>
   <td>Username</td>
-  <td><input type='text' name='username' /></td>
+  <td><input type='text' name='username' <input name='username' value='<?php echo showPost("username")?>'/></td>
 </tr>
 <tr>
   <td>Group</>
@@ -72,23 +72,23 @@ firstname, lastname)
  </td>
 <tr>
   <td>Password</td>
-  <td><input type='password' name='password' /> </td>
+  <td><input type='password' name='password' <input name='password' value='<?php echo showPost("password")?>'/></td>
 </tr>
 <tr>
   <td>Confirm Password</td>
-  <td> <input type='password' name='confirm' /></td>
+  <td> <input type='password' name='confirm' <input name='password' value='<?php echo showPost("password")?>'/></td>
 </tr>
 <tr>
   <td>Email</td>
-  <td> <input type='text' name='email' /> </td>
+  <td> <input type='text' name='email' <input name='email' value='<?php echo showPost("email")?>'/> </td>
 </tr>
 <tr>
   <td>First Name</td>
-  <td> <input type='text' name='firstname' /> </td>
+  <td> <input type='text' name='firstname'<input name='firstname' value='<?php echo showPost("firstname")?>'/> </td>
 </tr>
 <tr>
   <td>Last Name</td>
-  <td> <input type='text' name='lastname' /> </td>
+  <td> <input type='text' name='lastname' <input name='lastname' value='<?php echo showPost("lastname")?>'/> </td>
 </tr>
 <tr>
   <td colspan='2' style='text-align: center; background-color: white;'> 

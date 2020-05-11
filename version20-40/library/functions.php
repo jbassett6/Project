@@ -68,7 +68,7 @@ function displayError($mesg)
 {
     echo "<div id='errorMessage'>";
     echo $mesg;
-    echo "</div>";
+    echo "</div>";	
 }
 
 function showPost( $name )
