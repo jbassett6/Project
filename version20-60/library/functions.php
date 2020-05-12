@@ -24,12 +24,24 @@ function checkAccount($zone)
 	{
 	    header('Location: welcome.php');
 	}
+    if ($zone == 'superuser')
+    {
+        if (!isset($_SESSION['username']))
+        {
+            header('Location: suhome.php');
+        }
+        if ($_SESSION['usergroup'] != 'superuser')
+        {
+            header('Location: suhome.php');
+        }
+    }
+
     }	
 }
 
 function getDBConnection()
 {
-    $user = "kurban";
+    $user = "jbassett6";
     $conn = mysqli_connect("localhost",$user,$user,$user);
 
     // Check connection and shutdown if broken
@@ -55,7 +67,9 @@ function printUserTable($conn)
            . "<th>USERNAME</th>" 
            . "<th>ENCRYPTED PASSWORD</th>" 
            . "<th>GROUP</th>" 
-           . "<th>EMAIL</th>"   
+           . "<th>EMAIL</th>"
+	   . "<th>FULL NAME</th>"
+	   . "<th>Address</td>"         
            . "<th></th>"    // edit button   
 	   ;
 	echo "</tr>";
@@ -69,7 +83,12 @@ function printUserTable($conn)
                . "<td>" . $row["username"] . "</td>" 
                . "<td>" . $row["encrypted_password"] . "</td>" 
                . "<td>" . $row["usergroup"] . "</td>" 
-               . "<td>" . $row["email"] . "</td>"   ;
+               . "<td>" . $row["email"] . "</td>"   
+	       . "<td>" . $row["firstname"] . "</td>"
+	       . "<td>" . $row["lastname"] . "</td>"   
+	       . "<td>" . $row["address1"] . "<br>" 
+			. $row["address2"] . "<br>"
+			.  $row["city"] . $row["state"] . $row["zip"] . "</td>" ;
 	    printEditButton($row["id"]);
 	    echo "</tr>";
 	}

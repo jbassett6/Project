@@ -17,5 +17,11 @@ $conn = getDBConnection();
 ?>
 </head>
 <body>
-<?php echo $_SESSION['username'] ?>, welcome to your home page
+<?php echo $_SESSION['username'] ?>, welcome to your home page! If you are an
+Admins, you can go to the Admin homepage by click the following link.<button
+onclick="document.location = 'adminhome.php'">Admin Homepage!</button> <br>
+Superusers, you can go to the Superuser homepage by click the following
+link.<button
+onclick="document.location = 'suhome.php'">Superuser Homepage!</button>
+
 </body>
