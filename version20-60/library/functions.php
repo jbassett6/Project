@@ -88,7 +88,7 @@ function printUserTable($conn)
 	       . "<td>" . $row["lastname"] . "</td>"   
 	       . "<td>" . $row["address1"] . "<br>" 
 			. $row["address2"] . "<br>"
-			.  $row["city"] . $row["state"] . $row["zip"] . "</td>" ;
+			.  $row["city"] . ", ". $row["state"] .", ". $row["zip"] .", ". "</td>" ;
 	    printEditButton($row["id"]);
 	    echo "</tr>";
 	}
