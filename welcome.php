@@ -13,5 +13,5 @@ checkAccount("none");
 ?>
 </head>
 <body>
-This is the welcome page for our project
+This is the welcome page of jbassett6 for our project
 </body>
