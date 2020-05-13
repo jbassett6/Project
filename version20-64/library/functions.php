@@ -24,24 +24,12 @@ function checkAccount($zone)
 	{
 	    header('Location: welcome.php');
 	}
-    if ($zone == 'superuser')
-    {
-        if (!isset($_SESSION['username']))
-        {
-            header('Location: suhome.php');
-        }
-        if ($_SESSION['usergroup'] != 'superuser')
-        {
-            header('Location: suhome.php');
-        }
-    }
-
     }	
 }
 
 function getDBConnection()
 {
-    $user = "jbassett6";
+    $user = "kurban";
     $conn = mysqli_connect("localhost",$user,$user,$user);
 
     // Check connection and shutdown if broken
@@ -67,9 +55,7 @@ function printUserTable($conn)
            . "<th>USERNAME</th>" 
            . "<th>ENCRYPTED PASSWORD</th>" 
            . "<th>GROUP</th>" 
-           . "<th>EMAIL</th>"
-	   . "<th>FULL NAME</th>"
-	   . "<th>Address</td>"         
+           . "<th>EMAIL</th>"   
            . "<th></th>"    // edit button   
 	   ;
 	echo "</tr>";
@@ -83,15 +69,11 @@ function printUserTable($conn)
                . "<td>" . $row["username"] . "</td>" 
                . "<td>" . $row["encrypted_password"] . "</td>" 
                . "<td>" . $row["usergroup"] . "</td>" 
-               . "<td>" . $row["email"] . "</td>"   
-	       . "<td>" . $row["firstname"] . "</td>"
-	       . "<td>" . $row["lastname"] . "</td>"   
-	       . "<td>" . $row["address1"] . "<br>" 
-			. $row["address2"] . "<br>"
-			.  $row["city"] . ", ". $row["state"] .", ". $row["zip"] .", ". "</td>" ;
-	   	 echo "<td>";
-		 printEditButton($row["id"]);
-	   	 echo "</tr>";
+               . "<td>" . $row["email"] . "</td>"   ;
+	    echo "<td>";
+	    printEditButton($row["id"]);
+	    echo "</td>";
+	    echo "</tr>";
 	}
     } 
     else 
@@ -102,7 +84,7 @@ function printUserTable($conn)
     echo "</table>";
 }
 
-// print an edit button in a <td>
+// print an edit button form.
 function printEditButton($id)
 {
     echo "<form action='modifyAccount.php' method='POST'>";
@@ -110,7 +92,6 @@ function printEditButton($id)
     echo "<input type='submit' name='selection' value='Edit' />";
     echo "</form>";
 }
-
 
 function displayError($mesg)
 {
@@ -185,28 +166,25 @@ function checkAndStoreLogin( $conn, $usernameToTest, $passwordToTest )
     return FALSE;
 }
 
+
 function updateUserRecord($conn)
 {
     // we've already verified $_POST['id']
     // prepare since there's user input
-    $stmt = $conn->prepare("UPDATE users SET email=?, address1=?, address2=?,
-city=?, state=?, zip=?
-                                         WHERE id=?");
+    $stmt = $conn->prepare("UPDATE users SET email=? 
+                                         WHERE id=?"); 
     // bind variable names and types
-    $stmt->bind_param("siadctz", $email, $id, $address1, $address2, $city,
-$state, $zip);
-
+    $stmt->bind_param("si", $email, $id);
+    
     // move the information from the form into 'bound' variables
     $email = $_POST['email'];
     $id    = $_POST['id'];
-    $address1 =$_POST['address1'];
-    $address2 =$_POST['address2'];
-    $city     =$_POST['city'];
-    $state    =$_POST['state'];
-    $zip      =$_POST['zip'];
+    
     // put the statement together and send it to the database
     $stmt->execute();
 }
+
+
 
 
 ?>
