@@ -69,10 +69,11 @@ function printUserTable($conn)
            . "<th>GROUP</th>" 
            . "<th>EMAIL</th>"
 	   . "<th>FULL NAME</th>"
-	   . "<th>Address</td>"         
+	   . "<th>Address</th>"         
            . "<th></th>"    // edit button   
+	   . "<th></th>" // delete button ;
 	   ;
-	echo "</tr>";
+	   echo "</tr>";
 
 	// loop through all the rows 
 	while( $row = $result->fetch_assoc() ) 
@@ -91,7 +92,12 @@ function printUserTable($conn)
 			.  $row["city"] . ", ". $row["state"] .", ". $row["zip"] .", ". "</td>" ;
 	   	 echo "<td>";
 		 printEditButton($row["id"]);
-	   	 echo "</tr>";
+	   	 echo "</td>";
+	         echo "<td>";
+                 // printDeleteButton($row["id"]);
+                  printDeleteImage($row["id"]);
+                 echo "</td>";
+                 echo "</tr>";
 	}
     } 
     else 
@@ -111,6 +117,33 @@ function printEditButton($id)
     echo "</form>";
 }
 
+function printEditImage($id)
+{
+    echo "<form action='modifyAccount.php' method='POST'>";
+    echo "<input type='hidden' name='id' value='$id' />";
+    echo "<input type='hidden' name='selection' value='Edit' />";
+    echo "<input type='image' height='20' src='library/editicon.gif' />";
+    echo "</form>";
+}
+
+// print an delete button form.
+function printDeleteButton($id)
+{
+    echo "<form action='deleteAccount.php' method='POST'>";
+    echo "<input type='hidden' name='id' value='$id' />";
+    echo "<input type='submit' name='selection' value='Delete' />";
+    echo "</form>";
+}
+
+// print an delete button form with an Image.
+function printDeleteImage($id)
+{
+    echo "<form action='deleteAccount.php' method='POST'>";
+    echo "<input type='hidden' name='id' value='$id' />";
+    echo "<input type='hidden' name='selection' value='Delete' />";
+    echo "<input type='image' height='20' src='library/deleteicon.gif' />";
+    echo "</form>";
+}
 
 function displayError($mesg)
 {
@@ -207,6 +240,18 @@ $state, $zip);
     // put the statement together and send it to the database
     $stmt->execute();
 }
+
+function deleteUserRecord($conn)
+{
+    // we've already verified $_POST['id']
+    $stmt = $conn->prepare("UPDATE users SET deleted_at=?
+                                         WHERE id=?");
+    $stmt->bind_param("si", $time, $id);
+    $time  = date("Y-m-d H:i:s");
+    $id    = $_POST['id'];
+    $stmt->execute();
+}
+
 
 
 ?>
